@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.sql.*" %>
+<%@page import="com.ignek.crud.connection.DBConnection" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,13 +15,8 @@
 			<h1>Registration Form</h1>
 			
 			<div class="form-group">
-			<label>ID </label>
-			<input type="text" name="id" class="form-control">
-			</div>
-			
-			<div class="form-group">
 			<label>Full Name </label>
-			<input type="text" name="fname" class="form-control">
+			<input type="text" name="fullName" class="form-control">
 			</div>
 			
 			<div class="form-group">
@@ -68,13 +64,7 @@
 	</tr>
 	
 	<%
-	String dbDriver = "com.mysql.cj.jdbc.Driver";
-	String dbURL = "jdbc:mysql://localhost:3306/";
-	String dbName = "mysql_database";
-	String dbUsername = "root";
-	String dbPassword = "ignek@12345";
-	Class.forName(dbDriver);
-	Connection con = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+	Connection con = DBConnection.initializeDatabase();
 	String query="select * from Employee";
 	Statement st = con.createStatement();
 	ResultSet rs = st.executeQuery(query);
