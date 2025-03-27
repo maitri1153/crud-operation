@@ -4,13 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.ignek.crud.constant.Constant;
+import com.ignek.crud.constant.EmployeeConstant;
 
 public class DBConnection {
 	public static Connection initializeDatabase() throws SQLException, ClassNotFoundException {
-		
-		Class.forName(Constant.DRIVER);
-		Connection connection = DriverManager.getConnection(Constant.PATH,Constant.USERID,Constant.PASSWORD);
+		Connection connection = null;
+		try {
+			Class.forName(EmployeeConstant.DRIVER);
+			connection = DriverManager.getConnection(EmployeeConstant.PATH, EmployeeConstant.USERID, EmployeeConstant.PASSWORD);
+			return connection;
+		} catch (Exception e) {
+
+		}
 		return connection;
 	}
 }
