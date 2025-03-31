@@ -1,32 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.sql.*" %>
-<%@page import="com.ignek.crud.connection.DBConnection" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 <meta charset="UTF-8">
 <title>Registration Page</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"crossorigin="anonymous">
 </head>
 <body>
 	<div class="container">
-		<form action="InsertServlet" method="post">
-			<h1>Registration Form</h1>
+		<c:if test="${employee != null}">
+			<form action="EditServlet" method="post">
+		</c:if>
+		
+		<c:if test="${employee == null}">
+			<form action="InsertServlet" method="post">
+		</c:if>
+		
+			<c:if test="${employee != null}">
+			<h1>Update Your Details:</h1>
+			</c:if>
+		
+			<c:if test="${employee == null}">
+			<h1>Registration Form:</h1>
+			</c:if>
+			
+			<div class="form-group">
+			<label>ID</label>
+			<input type="text" name="emp_ID" class="form-control" hidden>
+			</div>
 			
 			<div class="form-group">
 			<label>Full Name </label>
-			<input type="text" name="fullName" class="form-control">
+			<input type="text" name="fullName" class="form-control" required <c:out value="${employee.fullName}"/>>
 			</div>
 			
 			<div class="form-group">
 			<label>E-mail</label>
-			<input type="email" name="email" class="form-control"> 
+			<input type="email" name="email" class="form-control" required placeholder="abc@gmail.com" <c:out value="${employee.email}"/>> 
 			</div>
 			
 			<div class="form-group">
 			<label>Select Gender</label><br>
-			<input type="radio" id="gender" name="gender" value="female"> 
+			<input type="radio" id="gender" name="gender" value="female" checked="true"> 
 			<label class="form-check-label" for="flexRadioDefault1">Female</label><br>
 			
 			<input type="radio" id="gender" name="gender" value="male"> 
@@ -35,14 +51,14 @@
 			
 			<div class="form-group">
 			<label> Select Date of Birth </label>
-			<input type="date" name="dob" class="form-control"> 
+			<input type="date" name="dob" class="form-control" required <c:out value="${employee.dob}"/>> 
 			</div>
 			
 			<div class="form-group">
 			<label>Select hobby</label><br> 
 			<input type="checkbox" name="hobby" value="Dancing"><label>Dancing</label><br>
 			<input type="checkbox" name="hobby" value="Singing"><label>Singing</label><br>
-			<input type="checkbox" name="hobby" value="Painting"><label>Painting</label><br>
+			<input type="checkbox" name="hobby" value="Painting" checked="true"><label>Painting</label><br>
 			</div>
 			
 			<input type="submit" value="submit" class="btn btn-success">
@@ -62,28 +78,21 @@
 	<th>Edit</th>
 	<th>Delete</th>
 	</tr>
-	
-	<%
-	Connection con = DBConnection.initializeDatabase();
-	String query="select * from Employee";
-	Statement st = con.createStatement();
-	ResultSet rs = st.executeQuery(query);
-	while(rs.next())
-	{
-	%>
-		<tr>
-		<th><%=rs.getInt(1) %></th>
-		<th><%=rs.getString(2) %></th>
-		<th><%=rs.getString(3) %></th>
-		<th><%=rs.getString(4) %></th>
-		<th><%=rs.getString(5) %></th>
-		<th><%=rs.getString(6) %></th>
-		<th><a href="EditServlet?emp_id=<%=rs.getString(1)%>" type="submit" id="delete"><button class="btn btn-warning">update</button></a></th>
-		<th><a href="DeleteServlet?id=<%=rs.getString(1)%>" type="submit" id="delete"><button class="btn btn-danger">Delete</button></a></th>
-		</tr>	
-	<%	
-	  }
-	%>
+
+	<tbody>
+    	<c:forEach var="employee" items="${employeelist}">
+    	<tr>
+            <td><c:out value="${employee.id}"/></td>
+            <td><c:out value="${employee.fullName}" /></td>
+            <td><c:out value="${employee.email}"/></td>
+            <td><c:out value="${employee.gender}"/></td>
+            <td><c:out value="${employee.dob}"/></td>
+            <td><c:out value="${employee.hobby}"/></td>
+            <td><a href="EditServlet?id=<c:out value='${employee.id}'/>">Edit</a></td>
+            <td><a href="DeleteServlet?id=<c:out value='${employee.id}'/>">Delete</a></td>
+        </tr>
+        </c:forEach>
+    </tbody>
 	</table>
 	</div>
 </body>
