@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head> 
@@ -27,17 +28,23 @@
 			
 			<div class="form-group">
 			<label>ID</label>
-			<input type="text" name="emp_ID" class="form-control" hidden>
+			<c:if test="${employee != null}">
+			<input type="text" name="emp_id" class="form-control" value = "${employee.id}">
+			</c:if>
+		
+			<c:if test="${employee == null}">
+			<input type="text" name="emp_id" class="form-control" hidden >
+			</c:if>
 			</div>
 			
 			<div class="form-group">
 			<label>Full Name </label>
-			<input type="text" name="fullName" class="form-control" required <c:out value="${employee.fullName}"/>>
+			<input type="text" name="fullName" class="form-control" required  value = "${employee.fullName}"/>
 			</div>
 			
 			<div class="form-group">
 			<label>E-mail</label>
-			<input type="email" name="email" class="form-control" required placeholder="abc@gmail.com" <c:out value="${employee.email}"/>> 
+			<input type="email" name="email" class="form-control" required placeholder="abc@gmail.com" value="${employee.email}"/> 
 			</div>
 			
 			<div class="form-group">
@@ -51,7 +58,7 @@
 			
 			<div class="form-group">
 			<label> Select Date of Birth </label>
-			<input type="date" name="dob" class="form-control" required <c:out value="${employee.dob}"/>> 
+			<input type="date" name="dob" class="form-control" required value="${employee.dob}"/>
 			</div>
 			
 			<div class="form-group">
@@ -88,7 +95,7 @@
             <td><c:out value="${employee.gender}"/></td>
             <td><c:out value="${employee.dob}"/></td>
             <td><c:out value="${employee.hobby}"/></td>
-            <td><a href="EditServlet?id=<c:out value='${employee.id}'/>">Edit</a></td>
+            <td><a href="EditServlet?emp_id=<c:out value='${employee.id}'/>">Edit</a></td>
             <td><a href="DeleteServlet?id=<c:out value='${employee.id}'/>">Delete</a></td>
         </tr>
         </c:forEach>
