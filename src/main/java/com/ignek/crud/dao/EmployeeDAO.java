@@ -9,7 +9,7 @@ import java.util.List;
 import com.ignek.crud.connection.DBConnection;
 import com.ignek.crud.constant.EmployeeConstant;
 import com.ignek.crud.dto.Employee;
- 
+
 public class EmployeeDAO {
 
 	protected static Connection getConnection() {
@@ -65,18 +65,41 @@ public class EmployeeDAO {
 		}
 		return employeelist;
 	}
-	
-	
-	 public static void updateEmployee(Employee employee) throws SQLException {
-	        try (Connection connection = DBConnection.initializeDatabase(); 
-	        		PreparedStatement statement = connection.prepareStatement(EmployeeConstant.UPDATE);) {
-	            statement.setString(1, employee.getFullName());
-	            statement.setString(2, employee.getEmail());
-	            statement.setString(3, employee.getGender());
-	            statement.setString(4, employee.getDob());
-	            statement.setString(5, employee.getHobby());
-	            statement.setInt(6, employee.getId());
-	            statement.executeUpdate();
-	        }
-	    }
+
+	public static Employee selectEmployee(int id) {
+		Employee employee = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement(EmployeeConstant.SELECT_USER_BY_ID);) {
+			preparedStatement.setInt(1, id);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int emp_id = rs.getInt(EmployeeConstant.ID);
+				String name = rs.getString(EmployeeConstant.NAME);
+				String email = rs.getString(EmployeeConstant.EMAIL);
+				String gender = rs.getString(EmployeeConstant.GENDER);
+				String dob = rs.getString(EmployeeConstant.DOB);
+				String hobby = rs.getString(EmployeeConstant.HOBBY);
+				employee = new Employee(emp_id, name, email, gender, dob, hobby);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return employee;
+	}
+
+	public static void updateEmployee(Employee employee) throws SQLException {
+		try (Connection connection = getConnection();
+				PreparedStatement statement = connection.prepareStatement(EmployeeConstant.UPDATE);) {
+			statement.setString(1, employee.getFullName());
+			statement.setString(2, employee.getEmail());
+			statement.setString(3, employee.getGender());
+			statement.setString(4, employee.getDob());
+			statement.setString(5, employee.getHobby());
+			statement.setInt(6, employee.getId());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
