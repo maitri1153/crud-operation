@@ -36,29 +36,29 @@ public class EmployeeDAO {
 		}
 	}
 
-	public static void deleteEmployee(int emp_id) throws SQLException {
+	public static void deleteEmployee(int id) throws SQLException {
 		try (Connection connection = getConnection();
 				PreparedStatement statement = connection.prepareStatement(EmployeeConstant.DELETE);) {
-			statement.setInt(1, emp_id);
+			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static List<Employee> selectAllEmployees() {
+	public static List<Employee> getAllEmployees() { 
 		List<Employee> employeelist = new ArrayList<>();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(EmployeeConstant.SELECT_USERS);) {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt(EmployeeConstant.ID);
+				int emp_id = rs.getInt(EmployeeConstant.ID);
 				String name = rs.getString(EmployeeConstant.NAME);
 				String email = rs.getString(EmployeeConstant.EMAIL);
 				String gender = rs.getString(EmployeeConstant.GENDER);
 				String dob = rs.getString(EmployeeConstant.DOB);
 				String hobby = rs.getString(EmployeeConstant.HOBBY);
-				employeelist.add(new Employee(id, name, email, gender, dob, hobby));
+				employeelist.add(new Employee(emp_id, name, email, gender, dob, hobby));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,11 +66,12 @@ public class EmployeeDAO {
 		return employeelist;
 	}
 
-	public static Employee selectEmployee(int id) {
+	public static Employee getEmployee(int id) { 
 		Employee employee = null;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(EmployeeConstant.SELECT_USER_BY_ID);) {
+			System.out.println(id);
 			preparedStatement.setInt(1, id);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
