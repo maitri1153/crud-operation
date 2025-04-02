@@ -10,6 +10,16 @@
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
-		<welcome-file>registerform.jsp</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<servlet>
+    <servlet-name>InsertServlet</servlet-name> 
+    <servlet-class>com.ignek.crud.servlet.InsertServlet</servlet-class> 
+    </servlet>
+    
+	<servlet-mapping>
+    <servlet-name>InsertServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+    </servlet-mapping>
 </web-app>
