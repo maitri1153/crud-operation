@@ -21,8 +21,8 @@ public class DeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			int id = Integer.parseInt(request.getParameter(EmployeeConstant.Id));
-			EmployeeDAO.deleteEmployee(id);
+			int delete_id = Integer.parseInt(request.getParameter(EmployeeConstant.DELETE_ID));
+			EmployeeDAO.deleteEmployee(delete_id);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("InsertServlet");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
