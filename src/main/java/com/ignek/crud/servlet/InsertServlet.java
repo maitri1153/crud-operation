@@ -26,9 +26,8 @@ public class InsertServlet extends HttpServlet {
 		request.getRequestDispatcher("register.jsp").forward(request, response);
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, NumberFormatException{
+			throws ServletException, IOException, NumberFormatException {
 		try {
 			Optional<String> id = Optional.of(request.getParameter(EmployeeConstant.ID));
 			String name = request.getParameter(EmployeeConstant.FULL_NAME);
@@ -38,18 +37,15 @@ public class InsertServlet extends HttpServlet {
 			String[] hobbylist = request.getParameterValues(EmployeeConstant.HOBBY);
 			String hobby = Arrays.toString(hobbylist);
 			System.out.println(id);
-			if(id.isEmpty())
-			{
+			if (id.isEmpty()) {
 				Employee employee = new Employee(name, email, gender, dob, hobby);
 				EmployeeDAO.insertEmployee(employee);
-			}
-			else
-			{
+			} else {
 				int emp_id = Integer.parseInt(request.getParameter(EmployeeConstant.ID));
-				Employee employee = new Employee(emp_id,name, email, gender, dob, hobby);
+				Employee employee = new Employee(emp_id, name, email, gender, dob, hobby);
 				EmployeeDAO.updateEmployee(employee);
-			}	
-		}catch (Exception e) {
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		doGet(request, response);
