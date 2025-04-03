@@ -1,3 +1,4 @@
+<%@page import="com.ignek.crud.dto.Employee"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -14,7 +15,7 @@
 			
 			<div class="form-group">
 			<label>ID</label>
-			<input type="text" name="emp_id" class="form-control"  value = "${employee.id}">
+			<input type="text" name="emp_id" class="form-control" hidden value = "${employee.id}">
 			</div>
 			
 			<div class="form-group">
@@ -30,12 +31,12 @@
 			<div class="form-group">
 			<label>Select Gender</label><br>
 			<input type="radio" id="gender" name="gender" value="female" 
-			checked= ( ${employee.gender}== "female")? "true" :"false"> 
-			<label class="form-check-label" for="flexRadioDefault1">Female</label><br>
+			checked = ( ${employee.gender} == "female") ? "true" : "false"/> 
+			<label class="form-check-label">Female</label><br>
 			
-			<input type="radio" id="gender" name="gender" value="male" 
-			checked= ( ${employee.gender}=="male")? "true":"false"> 
-			<label class="form-check-label" for="flexRadioDefault1">Male</label>
+			<input type="radio" id="gender" name="gender" value="male"
+			checked = ( ${employee.gender} =="male") ? "true" : "false"/> 
+			<label class="form-check-label">Male</label>
 			</div>
 			
 			<div class="form-group">
