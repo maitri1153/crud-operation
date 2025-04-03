@@ -2,7 +2,6 @@ package com.ignek.crud.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import org.apache.catalina.tribes.util.Arrays;
 import com.ignek.crud.constant.EmployeeConstant;
 import com.ignek.crud.dao.EmployeeDAO;
@@ -29,7 +28,7 @@ public class InsertServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, NumberFormatException {
 		try {
-			Optional<String> id = Optional.of(request.getParameter(EmployeeConstant.ID));
+			String id = request.getParameter(EmployeeConstant.ID);
 			String name = request.getParameter(EmployeeConstant.FULL_NAME);
 			String email = request.getParameter(EmployeeConstant.EMAIL);
 			String gender = request.getParameter(EmployeeConstant.GENDER);
@@ -37,10 +36,10 @@ public class InsertServlet extends HttpServlet {
 			String[] hobbylist = request.getParameterValues(EmployeeConstant.HOBBY);
 			String hobby = Arrays.toString(hobbylist);
 			System.out.println(id);
-			if (id.isEmpty()) {
+			if (id.isBlank()) {
 				Employee employee = new Employee(name, email, gender, dob, hobby);
 				EmployeeDAO.insertEmployee(employee);
-			} else {
+			} else{
 				int emp_id = Integer.parseInt(request.getParameter(EmployeeConstant.ID));
 				Employee employee = new Employee(emp_id, name, email, gender, dob, hobby);
 				EmployeeDAO.updateEmployee(employee);
