@@ -35,7 +35,6 @@ public class InsertServlet extends HttpServlet {
 			String dob = request.getParameter(EmployeeConstant.DOB);
 			String[] hobbylist = request.getParameterValues(EmployeeConstant.HOBBY);
 			String hobby = Arrays.toString(hobbylist);
-			System.out.println(id);
 			if (id.isBlank()) {
 				Employee employee = new Employee(name, email, gender, dob, hobby);
 				EmployeeDAO.insertEmployee(employee);
